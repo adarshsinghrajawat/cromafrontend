@@ -16,6 +16,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.0",
+    "caniuse-lite": "^1.0.30001612",
     "html-react-parser": "^5.0.7",
     "material-ui-dropzone": "^3.5.0",
     "react": "^18.2.0",
