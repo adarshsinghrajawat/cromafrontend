@@ -4,6 +4,7 @@ import Swal from "sweetalert2"
 import { TextField, Button, Avatar, Select, FormControl, InputLabel, MenuItem } from "@mui/material"
 import Heading from "../services/Heading"
 import BrandLogo from "../Assets/brands.png"
+import logo1 from "../Assets/logo1.png"
 export default function Brands(){
     const fetchAllCategory=async()=>{
     var result=await getData("category/display_all_category")
@@ -58,7 +59,7 @@ export default function Brands(){
     const[categoryId, setCategoryId]=useState("")
     return(
         <div style={{padding:10, display:"flex", flexDirection:"column", width:"30%", borderRadius:10, alignItems:"center", background:"#ece6ff"}}>
-        <Heading image={BrandLogo} caption="New Brands" link="/dashboard/displayallbrands"/>    
+        <Heading image={logo1} caption="New Brands" link="/dashboard/displayallbrands"/>    
         <FormControl size="small" style={{marginTop:40, marginBottom:20}} fullWidth>
   <InputLabel>Category</InputLabel>
   <Select

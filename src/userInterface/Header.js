@@ -2,7 +2,7 @@ import { AppBar, Box, Toolbar,Badge } from "@mui/material";
 import Logo from "../../src/Assets/croma.gif";
 import SearchComponent from "./components/SearchComponent";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -115,7 +115,7 @@ export default function Header(props) {
               }}
             >
               <div style={{display:"flex", flexDirection:"column"}}>
-              <AccountCircle style={{ fontSize: 30 }} />
+              <AccountCircleIcon style={{ fontSize: 30 }} />
               <div style={{fontSize:10}}>{userData?.username}</div>
               </div>
               <Badge color="secondary" badgeContent={productCart?.length} showZero>

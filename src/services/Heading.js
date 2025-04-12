@@ -5,7 +5,7 @@ export default function Heading(props){
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between", width:"100%"}}>
             <div>
-                <img src={props.image} width={80}/>
+                <img src={props.image} width={120} height={50}/>
                 <div style={{fontFamily: 'Kalam', fontWeight:"bold"}}>
                 {props.caption}
             </div>

@@ -9,6 +9,7 @@ import MaterialTable from "@material-table/core"
 import { useEffect } from "react"
 import { Button, Dialog, DialogActions, TextField } from "@mui/material"
 import BrandLogo from "../Assets/brands.png"
+import logo1 from "../Assets/logo1.png"
 import { useState } from "react"
 export default function DisplayAllBrands(){
 const [brandName, setBrandName]=useState("")
@@ -197,7 +198,7 @@ var navigate=useNavigate()
     <MaterialTable
       title= {<div style={{display:"flex", flexDirection:"row", margin:20, justifyContent:"space-between", width:"100%"}}>
       <div>
-          <img src={BrandLogo} width={80}/>
+          <img src={logo1} width={120} height={50}/>
           <div style={{fontFamily: 'Kalam', fontWeight:"bold"}}>
           Brands List
       </div>

@@ -6,7 +6,7 @@ import categoryicon from "../Assets/product.png"
 import Heading from "../services/Heading"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Swal from "sweetalert2"
-
+import logo1 from "../Assets/logo1.png"
 const useStyles = makeStyles({
     root: {
         height: '100%',
@@ -126,7 +126,7 @@ export default function Products() {
         <div className={classes.box}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Heading caption="New Product" image={categoryicon} link="/dashboard/displayallproducts"></Heading>
+                    <Heading caption="New Product" image={logo1} link="/dashboard/displayallproducts"></Heading>
                 </Grid>
 
                 <Grid item xs={6}>

@@ -10,6 +10,7 @@ import { postData,getData } from "../../../services/FetchNodeServices";
 import {useState,useEffect} from "react"
 import MenuComponent from "../MenuComponent";
 import TopBrand from "../../components/TopBrand";
+import Footer from "../Footer";
 export default function Home()
 {   const classes = useStyles();
     const [banners,setBanners]=useState([])
@@ -66,6 +67,9 @@ export default function Home()
         <div style={{display:'flex', justifyContent:'center',width:'100%',marginTop:20}}>
           <TopBrand data={brands}/>
         </div>
+        {/* <div style={{display:'flex', justifyContent:'center',width:'100%',marginTop:20}}>
+          <Footer/>
+        </div> */}
 
     </div>)
 }

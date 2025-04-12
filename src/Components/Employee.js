@@ -5,13 +5,13 @@ import Swal from "sweetalert2"
 import Heading from "../services/Heading"
 import categoryicon from "../Assets/electronics.jpg"
 import logo1 from "../Assets/logo1.png"
-export default function Category(){
+export default function Employee(){
     const validation=()=>{
         var error=false
-        if(catName.length==0)
+        if(employeeName.length==0)
         {
             error=true
-            handleError("Plz input category...!","categoryname")
+            handleError("Plz input Employee...!","categoryname")
         }
         if(img.filename.length==0)
         {
@@ -21,7 +21,7 @@ export default function Category(){
         return error
     }
     const handleReset=()=>{
-        setCatName("")
+        setEmployeeName("")
         setImg({bytes:"", filename:""})
     }
     const handleSubmit=async()=>{
@@ -30,9 +30,9 @@ export default function Category(){
         if(error==false)
         {
         var formData= new FormData()
-        formData.append("categoryname", catName)
+        formData.append("employeename", employeeName)
         formData.append("image", img.bytes)
-        var response=await postData("category/submit_category", formData)
+        var response=await postData("category/submit_employee", formData)
         if(response.status)
     {
         Swal.fire({
@@ -52,7 +52,7 @@ export default function Category(){
     }
 }
     }
-    const [catName, setCatName]=useState("")
+    const [employeeName, setEmployeeName]=useState("")
     const [img, setImg]=useState({bytes:"", filename:""})
     const [errors, seterror]=useState({})
     
@@ -64,12 +64,12 @@ export default function Category(){
     }
     return(
     <div style={{padding:10, display:"flex", flexDirection:"column", width:"30%", borderRadius:10, alignItems:"center", background:"#ece6ff"}}>
-    <Heading image={logo1} caption="New Category" link="/dashboard/displayallcategory"/>    
-    <TextField value={catName}  error={errors.categoryname} onFocus={()=>handleError(null,"categoryname")} helperText={errors.categoryname} onChange={(event)=>setCatName(event.target.value)} style={{marginBottom:20, marginTop:40,}} size="small" fullWidth label="Category Name"/>
+    <Heading image={logo1} caption="New Employees" link="/dashboard/displayallemployees"/>    
+    <TextField value={employeeName}  error={errors.categoryname} onFocus={()=>handleError(null,"categoryname")} helperText={errors.categoryname} onChange={(event)=>setEmployeeName(event.target.value)} style={{marginBottom:20, marginTop:40,}} size="small" fullWidth label="Employee Name"/>
     <div style={{display:"flex", marginBottom:20, flexDirection:"row", width:"80%", justifyContent:"space-between", alignItems:"center"}}>
     <Button onFocus={()=>handleError(null, "image")} component="label" size="small" style={{color:"#00b22c"}} variant="outlined">
      <input onChange={handleImg} hidden type="file" accept="images/*" multiple/>
-     category Image
+     Employee Image
      </Button>
      <div style={{fontSize:13, color:"red"}}>{errors.image}</div>
      <Avatar src={img.filename} alt="Category" variant="circle"/>

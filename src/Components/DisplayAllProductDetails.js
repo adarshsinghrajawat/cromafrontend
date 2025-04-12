@@ -30,10 +30,12 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { DropzoneArea, DropzoneAreaBase } from "material-ui-dropzone";
 import Heading from "../services/Heading";
-
+import logo1 from "../Assets/logo1.png"
 import categoryicon from "../../src/Assets/electronics.jpg";
-
+import dayjs from "dayjs";
+import moment from "moment/moment"
 import "../App.css";
+
 
 var useStyles = makeStyles({
   root: {
@@ -98,9 +100,16 @@ export default function DisplayAllProductDetails() {
   const [stock, setStock] = useState("");
   const [status, setStatus] = useState("");
   const [hsnCode, setHsnCode] = useState("");
+  const [shopkeeperName, setShopKeeperName] = useState('');
+  const [warrantyYears, setWarrantyYears] = useState('');
   const [productsList, setProductsList] = useState([]);
   const [productDetailsList, setProductDetailsList] = useState([]);
   const [files, setFiles] = useState([]);
+  const [issue, setIssue] = useState("");
+  const [receivingDate, setReceivingDate] = useState('')
+  const [returnDate, setReturnDate] = useState('NA')
+
+  const [date, setDate] = useState('') //
 
   const handleQuill = (newValue) => {
     setDescription(newValue);
@@ -113,12 +122,29 @@ export default function DisplayAllProductDetails() {
 
   const fetchAllProductDetails = async () => {
     var result = await getData("productdetails/fetch_product_details");
+    console.log("Fetched Productsdetail:", result.data); // ✅ Log the data
     setProductDetailsList(result.data);
   };
 
+  const fetchAllissue = async () => {
+    try {
+      var result = await getData("productdetails/fetch_all_issued");
+      console.log("Fetched issued data:", result.data); // Console log to check the fetched data
+      setIssue(result.data);
+    } catch (error) {
+      console.error("Error fetching issued data:", error); // Log any errors that occur
+    }
+  };
+
+
   const fetchAllProducts = async () => {
-    var result = await getData("products/display_all_products");
-    setProductsList(result.data);
+    try {
+      const result = await getData("products/display_all_products");
+      console.log("Fetched Products:", result.data); // ✅ Log the data
+      setProductsList(result.data);
+    } catch (error) {
+      console.error("Error fetching products:", error); // ❌ Handle errors
+    }
   };
 
   const fetchAllCategory = async () => {
@@ -252,6 +278,11 @@ export default function DisplayAllProductDetails() {
         offerprice: offerPrice,
         status: status,
         hsncode: hsnCode,
+        shopkeepername: shopkeeperName,
+        warrantyyears: warrantyYears,
+        date: date,
+        receivingdate: receivingDate,
+        returndate: returnDate
       };
       var response = await postData(
         "productdetails/update_productdetails_data",
@@ -332,9 +363,24 @@ export default function DisplayAllProductDetails() {
     setBrandId(rowData.brandid);
     setCategoryId(rowData.categoryid);
     setProductName(rowData.productname);
-
+    setShopKeeperName(rowData.shopkeepername)
+    setWarrantyYears(rowData.warrantyyears)
+    setDate(rowData.date?.substring(0, 10));
+    console.log("Receiving Date:", rowData.receivingdate);
+    var dater = moment(rowData.receivingdate).format("YYYY-MM-DD")
+    setReceivingDate(dater);
+    setReturnDate(rowData.returndate?.substring(0, 10) || "NA");
     setOpen(true);
   };
+
+  const formatDateString = (dateString) => {
+    // If the date is in 'YYYY-MM-DD' format already, return it as is
+    if (dateString) {
+      return dateString.split('T')[0]; // Extracts the date part only
+    }
+    return '';
+  };
+
 
   const editProduct = () => {
     return (
@@ -343,7 +389,7 @@ export default function DisplayAllProductDetails() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Heading
-                image={categoryicon}
+                image={logo1}
                 caption="Edit Product Details"
                 link=""
               />
@@ -458,7 +504,7 @@ export default function DisplayAllProductDetails() {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <TextField
                 value={price}
                 error={getErrors.price}
@@ -470,19 +516,29 @@ export default function DisplayAllProductDetails() {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <TextField
                 value={offerPrice}
                 error={getErrors.offerPrice}
                 helperText={getErrors.offerPrice}
                 onChange={(event) => setOfferPrice(event.target.value)}
                 onFocus={() => handleError("", "offerPrice")}
-                label="Offer Price"
+                label="Serial No."
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={6}>
+            <Grid item xs={4}>
+              <TextField
+                value={shopkeeperName}
+                error={getErrors.shopkeeperName}
+                helperText={getErrors.shopkeeperName}
+                onChange={(event) => setShopKeeperName(event.target.value)}
+                onFocus={() => handleError('', 'shopkeeperName')}
+                label="Shopkeeper Name"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={4}>
               <FormControl>
                 <FormLabel>Status</FormLabel>
                 <RadioGroup
@@ -491,30 +547,96 @@ export default function DisplayAllProductDetails() {
                   onChange={(event) => setStatus(event.target.value)}
                 >
                   <FormControlLabel
-                    value="continue"
+                    value="New"
                     control={<Radio />}
-                    label="Continue"
+                    label="New"
                   />
                   <FormControlLabel
-                    value="discontinue"
+                    value="Old"
                     control={<Radio />}
-                    label="Discountinue"
+                    label="Old"
+                  />
+                  <FormControlLabel
+                    value="Refer Based"
+                    control={<Radio />}
+                    label="Refer Based"
                   />
                 </RadioGroup>
               </FormControl>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <TextField
                 value={hsnCode}
                 error={getErrors.hsnCode}
                 helperText={getErrors.hsnCode}
                 onChange={(event) => setHsnCode(event.target.value)}
                 onFocus={() => handleError("", "hsnCode")}
-                label="HSN Code"
+                label="Item Code"
                 fullWidth
               />
             </Grid>
+            <Grid item xs={4}>
+              <TextField
+                value={warrantyYears}
+                error={getErrors.warrantyYears}
+                helperText={getErrors.warrantyYears}
+                onChange={(event) => setWarrantyYears(event.target.value)}
+                onFocus={() => handleError('', 'warrantyYears')}
+                label="Warranty (Years)"
+                type="number"
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+              <TextField
+                value={date}
+                error={getErrors.date}
+                helperText={getErrors.date}
+                onChange={(event) => setDate(event.target.value)}
+                onFocus={() => handleError('', 'date')}
+                label="Date of Purchased"
+                type="date"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+              <TextField
+                value={receivingDate}
+                error={getErrors.receivingDate}
+                helperText={getErrors.receivingDate}
+                onChange={(event) => setReceivingDate(event.target.value)}
+                onFocus={() => handleError('', 'receivingDate')}
+                label="Date of Receiving"
+                type="date"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+              <TextField
+                value={returnDate === 'NA' ? '' : returnDate}
+                error={getErrors.returnDate}
+                helperText={getErrors.returnDate}
+                onChange={(event) => setReturnDate(event.target.value || 'NA')}
+                onFocus={() => handleError('', 'returnDate')}
+                label="Date of Return"
+                type="date"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+
 
             <Grid item xs={12}>
               <ReactQuill
@@ -533,6 +655,8 @@ export default function DisplayAllProductDetails() {
                 {getErrors.description}
               </p>
             </Grid>
+
+
           </Grid>
         </div>
       </div>
@@ -581,7 +705,7 @@ export default function DisplayAllProductDetails() {
                 return acc;
               }, [])}
               clearOnUnmount={true}
-              //   fileObjects={[...files]}
+            //   fileObjects={[...files]}
             />
           </DialogContent>
           <DialogActions>
@@ -618,8 +742,14 @@ export default function DisplayAllProductDetails() {
       <MaterialTable
         style={{
           marginTop: "3%",
-        }}
-        title="Products Details List"
+        }} title={<div style={{ display: "flex", flexDirection: "row", margin: 20, justifyContent: "space-between", width: "100%" }}>
+          <div>
+            <img src={logo1} width={120} height={50} />
+            <div style={{ fontFamily: 'Kalam', fontWeight: "bold" }}>
+              Product Details List
+            </div>
+          </div></div>}
+
         columns={[
           { title: "Product Id", field: "productid" },
           { title: "Product Name", field: "productname" },
@@ -627,7 +757,8 @@ export default function DisplayAllProductDetails() {
             title: "Category",
             render: (rowData) => (
               <div>
-                {rowData.categoryid}/{rowData.categoryname}
+                {/* {rowData.categoryid}/ */}
+                {rowData.categoryname}
               </div>
             ),
           },
@@ -635,15 +766,107 @@ export default function DisplayAllProductDetails() {
             title: "Brand",
             render: (rowData) => (
               <div>
-                {rowData.brandid}/{rowData.brandname}
+                {/* {rowData.brandid}/ */}
+                {rowData.brandname}
               </div>
             ),
           },
           {
-            title: "Product Details",
+            title: "Model No./Item Code/Color/Condition",
             render: (rowData) => (
               <div>
-                {rowData.productdetailsid}/{rowData.modelno}
+                {rowData.productdetailsid}{rowData.modelno}/{rowData.hsncode}/{rowData.color}/{rowData.status}
+              </div>
+            ),
+          },
+          {
+            title: "Stock/Price",
+            render: (rowData) => (
+              <div>
+                {rowData.productdetailsid}{rowData.stock}/{rowData.price}Rs
+              </div>
+            ),
+          },
+          {
+            title: "Shopkeeper Name",
+            render: (rowData) => (
+              <div>
+                {rowData.productdetailsid}
+                {rowData.shopkeepername}
+              </div>
+            ),
+          },
+          {
+            title: "Date Of Purchasing/Date of Receiving/Date of Return",
+            render: (rowData) => (
+              <div>
+                {rowData.productdetailsid}
+                {rowData.date}/{rowData.receivingdate}/{rowData.receivingdate}/{rowData.returndate}
+              </div>
+            ),
+          },
+          { title: 'Picture', render: (rowData) => <Avatar src={`${serverURL}/images/${rowData.picture}`} ></Avatar> },
+
+          {
+            title: "Receiver's Signature",
+            field: "signature",
+            filtering: false,
+            render: (rowData) =>
+              rowData.signature ? (
+                <img src={rowData.signature} alt="signature" width={500} height={80} />
+              ) : (
+                "No Signature"
+              ),
+          },
+
+          {
+            title: "Bill",
+            render: (rowData) => (
+              rowData.pdf ? (
+                <a
+                  href={`${serverURL}/images/${rowData.pdf}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                    background: "#007BFF",
+                    padding: "5px 10px",
+                    borderRadius: "5px",
+                    fontSize: "14px",
+                  }}
+                >
+                  View PDF
+                </a>
+              ) : (
+                <span style={{ color: "red" }}>No PDF Available</span>
+              )
+            ),
+          },
+
+
+
+          {
+            title: "Authority's Signature",
+            field: "signatures",
+            filtering: false,
+            render: (rowData) =>
+              rowData.signature ? (
+                <img src={rowData.signatures} alt="signature" width={500} height={80} />
+              ) : (
+                "No Signature"
+              ),
+          },
+
+
+
+
+          {
+            title: "Warranty Years",
+            render: (rowData) => (
+              <div>
+                {rowData.productdetailsid}
+                {rowData.warrantyyears}
               </div>
             ),
           },

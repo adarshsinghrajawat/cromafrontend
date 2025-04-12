@@ -8,7 +8,7 @@ import Swal from "sweetalert2"
 import ProductImg from "../Assets/product.png"
 import { getData, postData, serverURL } from '../services/FetchNodeServices'
 import { useNavigate } from "react-router-dom"
-
+import logo1 from "../Assets/logo1.png"
 const useStyles = makeStyles({
     productroot: {
         height: '100%',
@@ -107,6 +107,8 @@ function DisplayAllProducts() {
     }
 
     const handleSubmit = async () => {
+
+
         var error = validation()
         if (error === false) {
             var body = { productname: productName, categoryid: categoryId, brandid: brandId, productid: productId }
@@ -349,7 +351,7 @@ function DisplayAllProducts() {
         return (<MaterialTable
             title={<div style={{display:"flex", flexDirection:"row", margin:20, justifyContent:"space-between", width:"100%"}}>
             <div>
-                <img src={ProductImg} width={80}/>
+                <img src={logo1} width={120} height={50}/>
                 <div style={{fontFamily: 'Kalam', fontWeight:"bold"}}>
                 Product List
             </div>

@@ -9,6 +9,7 @@ import MyAccountComponent from "../src/userInterface/components/users/MyAccountC
 import ShoppingComponent from "../src/userInterface/components/users/ShoppingComponent"
 import ProductFilterScreen from "./userInterface/components/screens/ProductFilterScreen";
 import Shopping from "../src/userInterface/components/screens/Shopping"
+import IssuedItemsChart from "./Components/IssuedItemsChart";
 export default function App() {
   return (
     
@@ -22,7 +23,7 @@ export default function App() {
           <Route element={<OtpComponent/>} path="/otp"/>
           <Route element={<Shopping/>} path="/useraccount"/>
           <Route element={<ProductFilterScreen/>} path="/profilscr"/>
-
+          <Route element={<IssuedItemsChart/>} path="issueditemschart"/>
         </Routes>
       </Router>
   );

@@ -19,8 +19,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://numericinfosystem.com/">
-        Numeric Infosystem Pvt Ltd
+      <Link color="inherit" href="https://www.linkedin.com/in/adarsh-singh-kushwah-314466249/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app ">
+        Adarsh Singh Rajawat
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

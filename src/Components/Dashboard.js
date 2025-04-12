@@ -35,6 +35,25 @@ import DisplayAllProducts from "./DisplayAllProducts"
 import Banner from "./Banner"
 import CategoryBanner from "./CategoryBanner"
 import { useNavigate } from 'react-router-dom';
+import Employee from './Employee';
+import ProductQuantityTable from './ProductQuantityTable';
+import { PersonPinSharp } from '@mui/icons-material';
+import Issued from './Issued';
+import Stock from './Stock';
+import TotalIssued from './TotalIssued';
+import Received from './Received';
+import TotalReceived from './TotalReceived';
+import BadgeIcon from '@mui/icons-material/Badge';
+import DescriptionIcon from '@mui/icons-material/Description';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import CallReceivedIcon from '@mui/icons-material/CallReceived';
+import CallMadeIcon from '@mui/icons-material/CallMade';
+import DisplayAllEmployees from './DisplayAllEmployees';
+import IssueGraph from './IssuedItemsChart';
+import IssuedItemsChart from './IssuedItemsChart';
+import IssuedReceivedItemsChart from './IssuedItemsChart';
+import ProductQuantityCharts from './ProductQuanityCharts';
+import ReceivedItemsCharts from './ReceivedItemsCharts';
 var useStyles = makeStyles({
     root: {
         width: "100%",
@@ -92,9 +111,15 @@ export default function Dashboard() {
     const listItems = [
         {
             icon: <LeaderboardIcon />,
-            title: 'Dashboard',
-            link: ''
+            title: 'Issue Charts',
+            link: '/dashboard/issuedreceiveditemschart'
         },
+        // {
+        //     icon: <LeaderboardIcon />,
+        //     title: 'Product Quanitity Chart ',
+        //     link: '/dashboard/productquantitycharts'
+        // },
+        
         {
             icon: <CategoryIcon />,
             title: 'Categories',
@@ -111,21 +136,86 @@ export default function Dashboard() {
             link: '/dashboard/displayallproducts'
         },
         {
-            icon: <ShoppingCartIcon />,
+            icon: <DescriptionIcon />,
             title: 'Specification',
             link: '/dashboard/displayallproductdetails'
         },
         {
-            icon: <PanoramaIcon />,
-            title: 'Banners',
-            link: '/dashboard/banner'
+            icon: <CallMadeIcon />,
+            title: 'Issued',
+            link: '/dashboard/issued'
         },
-        {
-            icon: <PermMediaIcon />,
-            title: 'Category Banners',
-            link: '/dashboard/categorybanner'
+        // {
+        //     icon: <PanoramaIcon />,
+        //     title: 'Banners',
+        //     link: '/dashboard/banner'
+        // },
+        // { 
+        
+        //     icon: <PermMediaIcon />,
+        //     title: 'Category Banners',
+        //     link: '/dashboard/categorybanner'
 
-        }
+        // },
+        {
+            icon: <BadgeIcon/>,
+            title: 'Employees',
+            link: '/dashboard/employee'
+
+        },
+
+        // {
+        //     icon: <PermMediaIcon />,
+        //     title: 'Employees',
+        //     link: '/dashboard/displayallemployees'
+
+        // },
+        {
+            icon: <Inventory2Icon />,
+            title: 'Inventory',
+            link: '/dashboard/productquantitytable'
+
+        },
+
+        // {
+        //     icon: <PermMediaIcon />,
+        //     title: 'Purchasing',
+        //     link: '/dashboard/stock'
+
+        // },
+
+        // {
+        //     icon: <PermMediaIcon />,
+        //     title: 'Issued List',
+        //     link: '/dashboard/totalissued'
+
+        // },
+        {
+            icon: <CallReceivedIcon />,
+            title: 'Return',
+            link: '/dashboard/received'
+
+        },
+
+        // {
+        //     icon: <CallReceivedIcon />,
+        //     title: 'Inventory Chart',
+        //     link: '/dashboard/productquantitycharts'
+
+        // },
+
+        // {
+        //     icon: <CallReceivedIcon />,
+        //     title: 'Received List',
+        //     link: '/dashboard/receiveditemscharts'
+
+        // },
+        // {
+        //     icon: <PermMediaIcon />,
+        //     title: 'Received List',
+        //     link: '/dashboard/totalreceived'
+
+        // },
     ]
 
     return (
@@ -167,15 +257,15 @@ export default function Dashboard() {
                     <Grid item xs={10} style={{ background: 'white', padding: '3% 1%', height: '100vh' }}>
                         <Grid container spacing={2}>
                             <Grid item md={10}>
-                                <TextField variant="outlined" fullWidth className={classes.roundedTextField} label="Search" />
+                                {/* <TextField variant="outlined" fullWidth className={classes.roundedTextField} label="Search" /> */}
                             </Grid>
                             <Grid item md={2} style={{ display: "flex", justifyContent: "center", alignItems: 'center' }}>
-                                <Badge badgeContent={9} color="success" style={{ marginRight: '8%' }}>
+                                {/* <Badge badgeContent={9} color="success" style={{ marginRight: '8%' }}>
                                     <EmailIcon color="action" style={{ width: 25, height: 25 }} />
-                                </Badge>
-                                <Badge badgeContent={4} color="error" style={{ marginRight: '8%' }}>
+                                </Badge> */}
+                                {/* <Badge badgeContent={4} color="error" style={{ marginRight: '8%' }}>
                                     <NotificationsIcon color="action" style={{ width: 25, height: 25 }} />
-                                </Badge>
+                                </Badge> */}
                                 <Menu
                                     anchorEl={anchorEl}
                                     id="account-menu"
@@ -253,6 +343,17 @@ export default function Dashboard() {
         <Route element={<DisplayAllProductDetails/>} path="/displayallproductdetails"/>
         <Route element={<Banner/>} path="/banner"/>
         <Route element={<CategoryBanner/>} path="/categorybanner"/>
+        <Route element={<Employee/>} path="/employee"/>
+        <Route element={<ProductQuantityTable/>} path="/productquantitytable"/>
+        <Route element={<Issued/>} path="/issued"/>
+        <Route element={<Stock/>} path="/stock"/>
+        <Route element={<TotalIssued/>} path="/totalissued"/>
+        <Route element={<Received/>} path="/received"/>
+        <Route element={<TotalReceived/>} path="/totalreceived"/>
+        <Route element={<DisplayAllEmployees/>} path="/displayallemployees"/>
+        <Route element={<IssuedReceivedItemsChart/>} path='/issuedreceiveditemschart'/>
+        <Route element={<ProductQuantityCharts/>} path='productquantitycharts'/>
+        <Route element={<ReceivedItemsCharts/>} path='receiveditemscharts'/>
         </Routes>       
                         </Grid>
 

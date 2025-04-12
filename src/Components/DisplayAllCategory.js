@@ -8,6 +8,7 @@ import { getData, serverURL, postData } from "../services/FetchNodeServices";
 import { Dialog, Button, DialogActions} from "@mui/material";
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { useNavigate } from "react-router-dom";
+import logo1 from "../Assets/logo1.png"
 export default function DisplayAllCategory(){
   var navigate=useNavigate()
   const validation=()=>{
@@ -197,7 +198,7 @@ const handleImg=(event)=>{
     <MaterialTable
       title= {<div style={{display:"flex", flexDirection:"row", margin:20, justifyContent:"space-between", width:"100%"}}>
       <div>
-          <img src={Category} width={80}/>
+          <img src={logo1} width={120} height={50}/>
           <div style={{fontFamily: 'Kalam', fontWeight:"bold"}}>
           Category List
       </div>
@@ -206,6 +207,9 @@ const handleImg=(event)=>{
         { title: 'Category Id', field: 'categoryid'},
         { title: 'Category Name', field: 'categoryname' },
         { title: 'Image', render:(rowData)=><img style={{width:50}} src={`${serverURL}/images/${rowData.image}`}/>},
+        // { title: 'Signature', render:(rowData)=><img style={{width:50}} src={`${serverURL}/images/${rowData.signature}`}/>},
+
+
       ]}
       data={category}
       actions={[
